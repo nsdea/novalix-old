@@ -20,9 +20,12 @@ class Errors(commands.Cog):
 
         embed = discord.Embed(
             title='Command Error',
-            description=f'```py\n{error_message}```',
+            description=f'```py\n{error_message[:4050]}```',
             color=management.color('error')
         )
+
+        if len(error_message) > 4050:
+            embed.set_footer(text=f'Only showing first 4050 instead of the total {len(error_message)} characters of the error message.')
 
         try:
             await ctx.respond(embed=embed)
