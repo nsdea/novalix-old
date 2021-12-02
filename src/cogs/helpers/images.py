@@ -43,7 +43,7 @@ def generate(base, member, name, pic):
 
     if member:
         name_text = member.nick if member.nick else member.name
-        profile_pic = member.avatar_url_as(size=256)
+        profile_pic = member.avatar.url #256px
 
     profile_pic_path = f'temp/profile_pic_{member.id if member else name}.jpg'
     open(profile_pic_path, 'wb').write(requests.get(profile_pic).content)
@@ -59,16 +59,16 @@ def generate(base, member, name, pic):
     path = f'temp/{member.id if member else name.replace(" ", "_")}.jpg'
     base_img.save(path)
 
-    if __name__ == '__main__':
-        base_img.show()
+    # if __name__ == '__main__':
+    # base_img.show()
 
     return File(path)
 
 def join(member=None, name=None, pic=None):
-    generate(base='join', member=member, name=name, pic=pic)
+    return generate(base='join', member=member, name=name, pic=pic)
 
 def leave(member=None, name=None, pic=None):
-    generate(base='leave', member=member, name=name, pic=pic)
+    return generate(base='leave', member=member, name=name, pic=pic)
 
 if __name__ == '__main__':
     join()

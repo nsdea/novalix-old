@@ -14,13 +14,19 @@ class JoinLeave(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        channel = discord.utils.get(member.guild.channels, id=str(config.load('join_channels')[member.guild.id]['channel']))
-        await channel.send(file=images.join(member=member))
+        try:
+            channel = discord.utils.get(member.guild.channels, id=int(config.load('join_channels')[member.guild.id]['channel']))
+            await channel.send(content=member.mention, file=images.join(member=member))
+        except KeyError:
+            pass
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        channel = discord.utils.get(member.guild.channels, id=str(config.load('leave_channels')[member.guild.id]['channel']))
-        await channel.send(file=images.leave(member=member))
+        try:
+            channel = discord.utils.get(member.guild.channels, id=int(config.load('leave_channels')[member.guild.id]['channel']))
+            await channel.send(content=member.mention, file=images.leave(member=member))
+        except KeyError:
+            pass
 
     @commands.has_permissions(manage_channels=True)
     @slash_command(description='👋 Sets the server\'s welcome/join message channel.')
