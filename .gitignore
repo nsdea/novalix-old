@@ -1,3 +1,6 @@
+temp/*.*
+*_channels.yml
+
 *fix.sh
 .fix.sh
 test*.*
