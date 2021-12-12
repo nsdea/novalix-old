@@ -32,9 +32,25 @@ class Tools(commands.Cog):
             await message.add_reaction(emoji)
         await ctx.respond(embed=embed)
 
-    @message_command(name='👨‍💻 Syntax highlight this message')  # creates a global message command
-    async def syntax(ctx, message: discord.Message):  # message commands return the message
-        await ctx.respond(f'```py\n{message.content}\n```')
+    @slash_command(description='📜 Lists which channels have special features, e.g. join messages.')
+    async def channels(self, ctx):
+        def find(config_name: str):
+            try:
+                return discord.utils.get(ctx.guild.channels, id=config.load(config_name)[ctx.guild.id]['channel']).mention
+            except:
+                return 'Not set'
+        
+        embed = discord.Embed(
+            title='Special Channels',
+            description= f'''
+**Join Channel** (`/joins`): {find('join_channels')}
+**Leave Channel** (`/leaves`): {find('leave_channels')}
+**Chatbot Channel** (`/chatbot`): {find('chatbot_channels')}
+''',
+            color=management.color(),
+        )
+
+        await ctx.respond(embed=embed)
 
 def setup(client):
     client.add_cog(Tools(client))

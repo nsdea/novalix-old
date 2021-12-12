@@ -33,6 +33,9 @@ class CraftChat(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if isinstance(message.channel, discord.DMChannel):
+            return
+
         if not message.channel.topic:
             return
 
