@@ -37,7 +37,7 @@ for temp_file in os.listdir('temp/'):
 
 async def status_task():
     while True:
-        await client.change_presence(activity=discord.Game(f'v0.6: new /chatbot'))
+        await client.change_presence(activity=discord.Game(f'v0.6.1 new /chatbot'))
 
 @client.event
 async def on_ready():

@@ -42,7 +42,9 @@ class ChatBot(commands.Cog):
                     ai_response = await self.rs.get_ai_response(message.content)
                     ai_response = ai_response[0].get('message')
                 except Exception as e:
-                    ai_response = f'Sorry, there\'s an error: `{e}`'
+                    ai_response = f'Sorry, there\'s an error: `{e if e else "please report the error to **ONLIX#1662**!"}`'
+                    raise e                
+                
                 await message.channel.send(ai_response)
 
     @commands.has_permissions(manage_channels=True)
